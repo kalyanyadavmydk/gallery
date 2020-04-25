@@ -7,9 +7,9 @@
     /* display: flex;
     flex: 33.33%; */
 }
-#images:hover{
+/* #images:hover{
     transform: scale(1.1);
-}
+} */
 .row {
     display: inline-table;
   }
@@ -39,3 +39,10 @@
   #imagecontainer{
       text-align: center;
   }
+  .example-card {
+    max-width: 400px;
+  }
+
+
+
+  

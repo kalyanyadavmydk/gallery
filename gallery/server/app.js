@@ -4,17 +4,25 @@ const bodyParser = require('body-parser')
  const path=require('path')
 const multer  = require('multer')
 const app = express()
- const image=require('./models/gallery');
- const db=require('./config/mongoose');
- //var basicAuth = require('basic-auth');
- 
+
+const image=require('./models/gallery-schema');
+const gallery=require('./routes/gallery')
+
+const db=require('./config/mongoose');
 
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }))
+
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use("/uploads",express.static(path.join("./uploads")))
-//app.use("/uploads",express.static(path.join("gallery/server/uploads")))
+
+
+
+app.use("/uploads",express.static(path.join("gallery/server/uploads")))
 //app.use(auth, express.static(__dirname + '/uploads'));
+app.use('/gallery',gallery)
+
 app.listen(3000,()=>{
     console.log("The server sarted")
 });
@@ -40,7 +48,7 @@ const storage = multer.diskStorage({
       if(isvalid){
          error=null;
       }
-       cb(error,"./uploads");
+       cb(error,"./uploads"); 
     },
     filename: (req, file, cb) =>{
       const name=file.originalname.toLowerCase().split(' ').join('-');
@@ -52,9 +60,15 @@ const storage = multer.diskStorage({
  app.post('/file',multer({storage:storage}).single('file'), (req,res,next)=>{
       const url=req.protocol+'://'+req.get("host")
       imagepath=url+"/uploads/"+req.file.filename
-    console.log(imagepath);
-     
-     console.log(req.file)
+        // console.log(imagepath);
+        // console.log(req.body.id)
+        image.updateOne({_id:req.body.id},{$push:{photopath:imagepath}},(err,result)=>{
+            if(err){ return res.send(err)}
+            else{
+                console.log(result)
+            return res.send({imagepath:imagepath})
+            }
+        })
       //upload(req,res,function(err){
       // if(!req.file){
       //   console.log("error in uploading",err);
@@ -62,11 +76,13 @@ const storage = multer.diskStorage({
       //   error.httpStatusCode=400
       //   // return res.redirect('back');
       // }
-       image.create({
-           avatar:imagepath
-       })
+
+
+    //    image.create({
+    //        avatar:imagepath
+    //    })
        
-       return res.send({status:'ok'})
+    //    return res.send({status:'ok'})
      
     })
     app.get('/getfiles',(req,res,nest)=>{
@@ -80,3 +96,6 @@ const storage = multer.diskStorage({
           res.send({value:a})
        })
     })
+
+
+    
