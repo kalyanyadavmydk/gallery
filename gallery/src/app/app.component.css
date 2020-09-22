@@ -1,48 +1,129 @@
+body{
+  min-height: 100vh;
+  background: black;
+  width: 100%;
+}
+
+.create_folder{
+  display: inline;
+}
+
+.create_folder form{
+  display: inline;
+  margin-left: 30%;
+}
+
+input[type=text] {
+  width: 25%;
+  padding: 10px 20px;
+  margin: 15px 15px;
+  box-sizing: border-box;
+}
+
+i{
+  font-size: 150px;
+  color: white;
+  cursor: pointer;
+}
+
+.create_folder i{
+  margin-left: 5%;
+font-size: 30px;
+}
+.create_folder i:hover{
+  color:brown;
+}
+
+.folder_container{
+  width: 80%;
+  margin-top: 3%;
+  margin-left: 10%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 3% 3%;
+}
+
+.create_folder button{
+  height: 45px;
+  width: 5%;
+  font-size: larger;
+  cursor: pointer;
+}
+
+
+p{
+  color: white;
+  cursor: pointer;
+  font-size: larger;
+  text-transform: uppercase;
+  margin-left: 15px;
+  letter-spacing: 2px;
+}
+
 #images{
-    /* margin-right: 100px;
-    margin-left: 40px; */
-    border: 1px solid black;
+    border: 2px solid #606060	;
+    margin: 30px;
     width: 445px;
     height: 300px;
-    /* display: flex;
-    flex: 33.33%; */
 }
-/* #images:hover{
-    transform: scale(1.1);
-} */
+
 .row {
     display: inline-table;
   }
-  .upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-  }
-  
-  .btn {
-    border: 2px solid gray;
-    color: gray;
-    background-color: white;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .upload-btn-wrapper input[type=file] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  }
-  #imagecontainer{
-      text-align: center;
-  }
-  .example-card {
-    max-width: 400px;
+.row i{
+  position: absolute;
+  top:8%;
+  right:8%;
+  font-size: 30px;
+}
+  .row i:hover{
+    color: red;
   }
 
+ .fileupload{
+   margin-left: 90%;
+ } 
 
-
+.file {
+  position: relative;
+  overflow: hidden;
+}
+.upload {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+.img-container{
+  margin-left: 3%;
+}
   
+@media only screen and (max-width:780px){
+
+  .img-container,p,.create_folder i,.folder_container,input[type=text],.folder_container,.create_folder,.create_folder form,.fileupload,#images{
+    margin: 1%;
+    padding: 0%;
+    text-align: center;
+  }
+  input[type=text]{
+    width: 39%;
+    padding: 2px;
+  }
+  #images{
+    margin: 3px;
+    width: 325px;
+    height: 220px;
+  }
+  .create_folder button{
+    font-size: medium;
+    width: 20%;
+    height: 35px;
+  }
+  .folder_container{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
+  }
+
+}

@@ -17,50 +17,64 @@ export class AppComponent  implements OnInit,OnDestroy {
   file
   selected=""
   folders
+  show=true
   private foldersub:Subscription
   private imagesub:Subscription
   ngOnInit(): void {
     this.galleryservice.getfolder()
     this.foldersub=this.galleryservice.getfolderupdated().subscribe(data=>{
       this.folders=data
-    })
+  })
    
   }
 
   constructor(private http:HttpClient , private form : FormBuilder,private galleryservice:GalleryService){}
   
-  createfolder(form:NgForm){
-    //console.log(form.value.folder)
-    this.galleryservice.addfolder(form.value.folder)
+createfolder(form:NgForm){
+    if(form.invalid)
+    return;
+    this.galleryservice.addfolder(form.value.folder);
+    (document.getElementById('foldername') as HTMLInputElement).value=""
+    
   }
 
-  deletefolder(){
+deletefolder(){
+    this.show=true
     this.galleryservice.deletefolder(this.selected)
     this.selected=""
   }
+  closefolder(){
+    this.show=true
+    this.selected=""
+    this.images=null
+  }
 
-  dispalyimages(){
+dispalyimages(id){
+  this.show=false
+  this.selected=id
   this.galleryservice.displayimages(this.selected)
   this.imagesub=this.galleryservice.getimagesupdated().subscribe(data=>{
-    //console.log(data,"data")
     this.images=data
-    //console.log(this.images)
   })
-
  }
 
+
 onfileselect(event){
-    if(event.target.files.length>0){
+    if(event.target.files.length>0)
+    {
        var file=event.target.files;
       for(let img of file)
       {
         this.galleryservice.addimages(img,this.selected)}
-     }
+      }
   }
 
-  deleteimage(imgpath){
+
+deleteimage(imgpath){
     this.galleryservice.deleteimage(this.selected,imgpath)
   }
+
+
 
 ngOnDestroy(){
   this.foldersub.unsubscribe()

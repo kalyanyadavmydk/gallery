@@ -1,52 +1,51 @@
-<br>
-<form (submit)="createfolder(folder)" #folder="ngForm">
-<mat-form-field style="margin-left: 50px;" class="example-full-width">
-    <mat-label>Create New Folder</mat-label>
-    <input matInput placeholder="Ex. Pizza" value="Sushi" name="folder" ngModel>
-</mat-form-field>
-<button type="submit" mat-button>Create </button>
-</form>
+<!DOCTYPE html>
 
-<mat-form-field >
-    <mat-label>Select Folder</mat-label>
-    <mat-select [(value)]="selected">
-        <mat-option *ngFor="let i of folders" [value]="i._id" (click)="dispalyimages()">
-            {{i.foldername}}
-          </mat-option>
-    </mat-select>
-  </mat-form-field>
-<div *ngIf="selected">
-<input type="file" multiple (change)="onfileselect($event)" accept=".gif,.jpg,.jpeg,.png">
-<button (click)="deletefolder()">Delete Folder</button>
-</div>
-<!-- <input type="file" name="image" multiple (change)="onfileselect($event)" accept=".gif,.jpg,.jpeg,.png">
-<button type="submit" (click)="onsubmit()">press</button> -->
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <div class="create_folder">
+            <i class="fa fa-home" (click)="closefolder()" data-toggle="tooltip" data-placement="top" title="Home"></i>
+        
+            <form (submit)="createfolder(folder)" #folder="ngForm">
+                <input id="foldername" type="text" placeholder="Create New Folder" name="folder" required ngModel>
+                <button type="submit">Create</button>
+            </form>
+           
+            <i *ngIf="selected" class="fa fa-trash-o"  (click)="deletefolder()" data-toggle="tooltip" data-placement="top" title="Delete Folder!"></i>
+        
 
 
-<!-- <form (submit)="onsubmit(formval)" #formval="ngForm">
-    <input type="file" name="files"(change)="onfileselect($event)" multiple ngModel><br>
-    <input type="text" name="folder" ngModel><br>
-    <button type="submit">Submit</button>
-</form>
-<br> -->
+        </div>
 
+        <div>
+            <div class="folder_container" *ngIf="show">
+                <div *ngFor="let i of folders">
+                    <span (click)="dispalyimages(i._id)">
+                        <i class="fa fa-folder-open-o"></i>
+                        <p>{{i.foldername}}</p>
+                    </span>
+                </div>
+            </div>
 
+            <div *ngIf="selected" class="fileupload">
+                <div class="file btn  btn-primary">Upload
+                    <input class="upload" type="file" multiple (change)="onfileselect($event)" accept=".gif,.jpg,.jpeg,.png">
+                </div>
+            </div>
+        </div>
 
-<!-- <form (submit)="onsubmit()">
-    <span class="upload-btn-wrapper">
-        <input type="file" name="files" multiple  multiple (change)="onfileselect($event)" accept=".gif,.jpg,.jpeg,.png"/>
-        <button class="btn"style="margin-left: 30px" >Upload a file</button>
-    </span>
-    <button type="submit" class="btn" style="margin-left: 30px">Submit</button>
-</form> -->
-<form > 
-    
-</form>
-<div *ngIf="images">
-    <span  *ngFor="let img of images" class="row">
-        <img  [src]="img" alt="image" id="images"><br>
-        <button mat-button color="warn" type="button" (click)="deleteimage(img)" >delete</button>
-    </span>
-</div>
+            <div *ngIf="images" class="img-container">
+                <span  *ngFor="let img of images" class="row">
+                    <div style="position: relative; ">
+                        <img [src]="img" alt="image" id="images"><br>
+                        <i class="fa fa-close" (click)="deleteimage(img)"></i>
+                    </div>
+                </span>
+            </div>
+    </body>
+</html>
 
-<!-- <img src="dataval" alt="hiiiiiiiiiiiii"> -->
